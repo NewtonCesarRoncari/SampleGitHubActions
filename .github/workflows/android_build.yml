@@ -39,3 +39,34 @@ jobs:
        with:
          name: app
          path: app/build/outputs/apk/debug/app-debug.apk
+
+  deploy-dev:
+    runs-on: ubuntu-latest
+    environment:
+      name: dev
+      url: 'newton.com'
+    needs: [test, apk]
+    stpes:
+      - name: Run a one-line script
+        run: echo Deploy Dev
+
+  deploy-hmg:
+    runs-on: ubuntu-latest
+    environment:
+      name: hmg
+      url: 'newton.com'
+    needs: deploy-dev
+    stpes:
+      - name: Run a one-line script
+        run: echo Deploy HMG
+
+  deploy-prod:
+    runs-on: ubuntu-latest
+    environment:
+      name: prd
+      url: 'newton.com'
+    needs: deploy-hmg
+    stpes:
+      - name: Run a one-line script
+        run: echo Deploy PRD
+
